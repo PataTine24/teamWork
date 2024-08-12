@@ -1,4 +1,3 @@
 ## README
 
-This is my readme and you can reed me!
-dhdhd
+This is my readme and you can read me!
