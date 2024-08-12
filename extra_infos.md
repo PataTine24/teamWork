@@ -1,3 +1,3 @@
-This file can ctainyur advertisement!
+This file can contain your advertisement!
 
-if yu not yu suck!
+Be nice!
