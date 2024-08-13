@@ -27,7 +27,8 @@ def main():
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
-
+    print("test")
+    print("test")
 
 if __name__ == '__main__':
     main()
