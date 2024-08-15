@@ -6,7 +6,11 @@ from pathlib import Path
 # # # # Database stuff # # # #
 
 def create_database():
-    """Diese Funktion erstellt eine neue Datenbank"""
+    """
+    creates the database 'telefonbuch' with a table 'telefonbuch'.\n
+    the table has the following columns:\n
+    first_name, last_name, phone_number, note.
+    """
     conn = sqlite3.connect('telefonbuch.sqlite')
     c = conn.cursor()  # Der Cursor wird erstellt
     sql = """create table if not exists telefonbuch(
@@ -23,7 +27,7 @@ def create_database():
     conn.close()
 
 
-def get_all_entrys():
+def get_all_entries():
     """
     return value examples:
     [(1, 'Tine', 'Bagin', '0711', 'liebt Eis')]\n
@@ -40,7 +44,7 @@ def get_all_entrys():
 
 def add_entry(first_name:str, last_name:str, phone_number:str, note:str):
     """
-    Hinzufügen von Einträgen in die Datenbank 'Telefonbuch':\n
+    Add a new entry to the database 'telefonbuch':\n
     :param first_name: str first_name (Vorname)
     :param last_name: str last_name (Nachname)
     :param phone_number: str phone_number (Telefonnummer)
@@ -54,14 +58,24 @@ def add_entry(first_name:str, last_name:str, phone_number:str, note:str):
     conn.commit()
     conn.close()
 
-def delete_entry_by_name(name: str):
-    all_entrys = get_entry_by_name(name)
-    for entry in all_entrys:
-        delete_entry_by_id(entry[0])
-
+def delete_entries_by_name(name: str):
+    """
+    Deletes all entries where first_name, or last_name like 'search input'
+    :param name: str name (vor- und nachname)
+    :return: int(count deleted rows)
+    """
+    count_deleted = 0
+    all_entries = get_entries_by_name(name)
+    for row in all_entries:
+        count_deleted += delete_entry_by_id(row[0])
+    return count_deleted
 
 def delete_entry_by_id(id: int):
-
+    """
+    Delete row with given id from telefonbuch
+    :param id: int
+    :return: int (affected rows)
+    """
     params = (id,)
 
     conn = sqlite3.connect('telefonbuch.sqlite')
@@ -72,8 +86,10 @@ def delete_entry_by_id(id: int):
     conn.commit()
     conn.close()
 
+    return affected
 
-def get_entry_by_name(name: str) -> list[tuple]:
+
+def get_entries_by_name(name: str) -> list[tuple]:
     """
     return value examples:
     [(1, 'Tine', 'Bagin', '0711', 'liebt Eis')]\n
@@ -92,9 +108,7 @@ def get_entry_by_name(name: str) -> list[tuple]:
 
 
 def test():
-    name = "tine"
-    get_entry_by_name(name)
-    print("test suchen")
+   pass
 
 if __name__ == '__main__':
     test()
